@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap');
+
+body{
+    background-color: #343541;
+    color: #ECECF1;
+    height: 100%;
+}
+
+#main{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    min-height:80vh;
+    font-family: 'Poppins';
+    font-style: italic;
+
+    font-size: 0.8rem;
+}
+img{
+    height: 50px;
+}
+p{
+    background-color: #444655;
+    border: none;
+    color: #ECECF1;
+    padding: 5px 15px;
+    border-radius: 0.5rem;
+}
+    </style>
+    <title>Summarize and Translate</title>
+  </head>
+  <body>
+    <div id="main">
+        <h1>Summarize and Translate</h1>
+        <h2>Input text:</h2>
+        <p>{{ input_text }}</p>
+        <h2>Translated output:</h2>
+        <p>{{ output_text }}</p>
+    </div>
+  </body>
+</html>

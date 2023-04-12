@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap');
+
+body{
+    background-color: #343541;
+    color: #ECECF1;
+}
+
+#main{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    min-height: 80vh;
+
+    font-family: 'Poppins';
+    font-style: italic
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+input[type=submit] {
+    
+    background-color: #444655;
+    border: none;
+    color: #ECECF1;
+    padding: 15px 30px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    box-shadow: 0.5px 0.5px 5px rgb(43, 43, 43);
+  }
+
+h1{
+    font-size: 3rem;
+    font-family: 'Poppins';
+    font-style: italic
+}
+::placeholder { 
+    
+    font-family: 'Poppins';
+    font-style: italic;
+    color: #ECECF1;
+    opacity: 1; 
+  }
+
+  img{
+    height: 50px;
+}
+
+textarea{
+    color: #ECECF1 ;
+    background-color:#444655 ;
+    border-radius: 0.5rem;
+    border-color: #444655;
+    box-shadow: 0.5px 0.5px 5px rgb(43, 43, 43);
+}
+</style>
+    <title>Summarize and Translate</title>
+  </head>
+  <body>
+    <div id="main">
+        <h1>Summarize and Translate</h1>
+        <form method="post" action="/summarize_and_translate">
+          <!-- <label for="text">Enter text to summarize and translate</label> -->
+          <br>
+          <textarea name="text" rows="10" cols="50" placeholder="Enter text to summarize and translate"></textarea>
+          <br>
+          <input type="submit" value="Submit">
+        </form>
+    </div>
+  </body>
+</html>
