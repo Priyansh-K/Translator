@@ -11,12 +11,11 @@ import requests
 from typing import List
 
 def summarize_and_translate(text: str, target_lang: str = "ne") -> List[str]:
-    # Summarize using method 1
+
     article_text = text.replace("\n", " ")
     article_text = re.sub(r"\[[0-9]*\]", " ", article_text)
     article_text = re.sub(r"\s+", " ", article_text)
 
-    # Remove special characters and digits
     formatted_article_text = re.sub("[^a-zA-Z]", " ", article_text)
     formatted_article_text = re.sub(r"\s+", " ", formatted_article_text)
 
@@ -47,20 +46,12 @@ def summarize_and_translate(text: str, target_lang: str = "ne") -> List[str]:
     summary_1 = " ".join(summary_sentences_1)
     
     from nltk.corpus import stopwords
-    # Summarize using method 2
     def lsaSummarize(text):
-        """
-        Input a paragraph as string
 
-        Output the summary using Latent Semantic Analysis (LSA)
-        """
-        # Tokenize the text into sentences
         sentences = sent_tokenize(text)
 
-        # Create a list of stopwords
         stop_words = stopwords.words('english')
 
-        # Create a list of cleaned sentences
         clean_sentences = [sent.lower() for sent in sentences]
 
         # Convert the cleaned sentences to a TF-IDF matrix
@@ -71,10 +62,8 @@ def summarize_and_translate(text: str, target_lang: str = "ne") -> List[str]:
         svd = TruncatedSVD(n_components=5, random_state=0)
         svd_matrix = svd.fit_transform(tfidf_matrix)
 
-        # Calculate the sentence scores based on the SVD matrix
         scores = np.sum(svd_matrix, axis=1)
 
-        # Sort the sentences by score and select the top 3
         ranked_sentences = sorted(((scores[i],s) for i,s in enumerate(sentences)), reverse=True)
         summary = ' '.join([ranked_sentences[i][1] for i in range(3)])
 
@@ -82,7 +71,6 @@ def summarize_and_translate(text: str, target_lang: str = "ne") -> List[str]:
 
     summary_2 = lsaSummarize(text)
 
-    # Summarize using method 3
     tokenizer = T5Tokenizer.from_pretrained('t5-base')
     model = T5ForConditionalGeneration.from_pretrained('t5-base')
 
@@ -95,7 +83,6 @@ def summarize_and_translate(text: str, target_lang: str = "ne") -> List[str]:
     scores = {}
     for i in range(3):
         for j in range(i+1,3):
-            # Tokenize the summaries
             summary1_tokens = word_tokenize(summaries[i])
             summary2_tokens = word_tokenize(summaries[j])
 
@@ -104,13 +91,10 @@ def summarize_and_translate(text: str, target_lang: str = "ne") -> List[str]:
             union = set(summary1_tokens).union(summary2_tokens)
             jaccard_score = len(intersection) / len(union)
 
-            # Add the score to the dictionary
             scores[(i,j)] = jaccard_score
 
-    # Find the maximum score
     max_score = max(scores.values())
 
-    # Find the summaries with the maximum score
     best_summaries = []
     for key, value in scores.items():
         if value == max_score:
@@ -119,7 +103,6 @@ def summarize_and_translate(text: str, target_lang: str = "ne") -> List[str]:
 
     summary = summaries[best_summaries[0]]
 
-    # Translate summary to Nepali
     translated_text = ""
     length = len(summary)
     parts = [summary[i:i+500] for i in range(0, length, 500)]
